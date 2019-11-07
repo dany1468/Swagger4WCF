@@ -51,6 +51,10 @@ namespace Swagger4WCF
                         {
                             this.Add($"version: \"{ _argument }\"");
                         }
+                        else
+                        {
+                            this.Add($"version: \"1.0.0\"");
+                        }
                     }
                     this.Add("host: localhost");
                     this.Add("schemes:");
