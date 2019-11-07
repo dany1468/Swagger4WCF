@@ -289,11 +289,19 @@ namespace Swagger4WCF
                         this.Add("items:");
                         using (new Block(this)) { this.Add(type.GetElementType(), documentation); }
                     }
+                    else if (type.Resolve()?.FullName == "System.Collections.Generic.List`1")
+                    {
+                        this.Add("type: array");
+                        this.Add("items:");
+
+                        var argType = ((GenericInstanceType) type).GenericArguments[0];
+                        using (new Block(this)) { this.Add(argType, documentation); }
+                    }
                     else if (type is TypeDefinition typeDef && typeDef.IsEnum)
                     {
                         this.Add("type: \"string\"");
                         this.Add("enum:");
-                        
+
                         foreach (var field in typeDef.Fields)
                         {
                             if (field.Name == "value__")
