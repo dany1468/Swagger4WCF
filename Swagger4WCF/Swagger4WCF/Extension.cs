@@ -19,7 +19,8 @@ namespace Swagger4WCF
             where T : Attribute
         {
             var _type = assembly.MainModule.ImportReference(typeof(T)).Resolve();
-            return assembly.CustomAttributes.SingleOrDefault(_Attribute => assembly.MainModule.ImportReference(_Attribute.AttributeType).Resolve() == _type);
+//            return assembly.CustomAttributes.SingleOrDefault(_Attribute => assembly.MainModule.ImportReference(_Attribute.AttributeType).Resolve() == _type);
+            return assembly.CustomAttributes.SingleOrDefault(_Attribute => assembly.MainModule.ImportReference(_Attribute.AttributeType).Resolve().Name == _type.Name);
         }
 
         static public CustomAttribute GetCustomAttribute<T>(this TypeDefinition type)
@@ -28,11 +29,12 @@ namespace Swagger4WCF
             try
             {
                 var _type = type.Module.ImportReference(typeof(T)).Resolve();
-                return type.CustomAttributes.SingleOrDefault(_Attribute => _Attribute.AttributeType.Resolve() == _type);
+//                return type.CustomAttributes.SingleOrDefault(_Attribute => _Attribute.AttributeType.Resolve() == _type);
+                return type.CustomAttributes.SingleOrDefault(_Attribute => _Attribute.AttributeType.Name == _type.Name);
             }
             catch (Exception e)
             {
-                throw new Exception($"type = {type.Name}", e); 
+                throw new Exception($"type = {type.Name}", e);
             }
         }
 
@@ -40,7 +42,7 @@ namespace Swagger4WCF
             where T : Attribute
         {
             var _type = method.Module.ImportReference(typeof(T)).Resolve();
-            return method.CustomAttributes.SingleOrDefault(_Attribute => _Attribute.AttributeType.Resolve() == _type);
+            return method.CustomAttributes.SingleOrDefault(_Attribute => _Attribute.AttributeType.Name == _type.Name);
         }
 
         static public CustomAttribute GetCustomAttribute<T>(this PropertyDefinition property)

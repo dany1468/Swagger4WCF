@@ -254,31 +254,31 @@ namespace Swagger4WCF
 
                 private void Add(TypeReference type, Documentation documentation)
                 {
-                    if (type.Resolve() == type.Module.ImportReference(typeof(string)).Resolve())
+                    if (type.Resolve()?.Name == type.Module.ImportReference(typeof(string)).Resolve()?.Name)
                     {
                         this.Add("type: \"string\"");
                     }
-                    else if (type.Resolve() == type.Module.ImportReference(typeof(bool)).Resolve())
+                    else if (type.Resolve()?.Name == type.Module.ImportReference(typeof(bool)).Resolve()?.Name)
                     {
                         this.Add("type:\" boolean\"");
                     }
-                    else if (type.Resolve() == type.Module.ImportReference(typeof(int)).Resolve())
+                    else if (type.Resolve()?.Name == type.Module.ImportReference(typeof(int)).Resolve()?.Name)
                     {
                         this.Add("type: \"number\"");
                         this.Add("format: int32");
                     }
-                    else if (type.Resolve() == type.Module.ImportReference(typeof(long)).Resolve())
+                    else if (type.Resolve()?.Name == type.Module.ImportReference(typeof(long)).Resolve()?.Name)
                     {
                         this.Add("type: \"number\"");
                         this.Add("format: int32");
                     }
-                    else if (type.Resolve() == type.Module.ImportReference(typeof(decimal)).Resolve()
-                             || type.Resolve() == type.Module.ImportReference(typeof(decimal?)).Resolve())
+                    else if (type.Resolve()?.Name == type.Module.ImportReference(typeof(decimal)).Resolve()?.Name
+                             || type.Resolve()?.Name == type.Module.ImportReference(typeof(decimal?)).Resolve()?.Name)
                     {
                         this.Add("type: \"number\"");
                         this.Add("format: decimal(9,2)");
                     }
-                    else if (type.Resolve() == type.Module.ImportReference(typeof(DateTime)).Resolve())
+                    else if (type.Resolve()?.Name == type.Module.ImportReference(typeof(DateTime)).Resolve()?.Name)
                     {
                         this.Add("type: \"string\"");
                         this.Add("format: date-time");
