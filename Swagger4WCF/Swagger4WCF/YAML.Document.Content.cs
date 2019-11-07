@@ -88,7 +88,8 @@ namespace Swagger4WCF
                                 && !(typeRef.Resolve() == typeRef.Resolve().Module.ImportReference(typeof(DateTime)).Resolve()))
                             .Select(_Type => _Type.IsArray ? _Type.GetElementType() : _Type).Distinct();
 
-                        definitionList.AddRange(responses.ToList());
+                        foreach (var res in responses)
+                            if (!definitionList.Contains(res)) definitionList.Add(res);
 
                         var resparameters = _methods.SelectMany(_Method => _Method.Parameters).Select(x => x.ParameterType)
                             .OrderBy(typeRef => typeRef.Name)
@@ -102,7 +103,9 @@ namespace Swagger4WCF
                                 && !(typeRef.Resolve() == typeRef.Resolve().Module.ImportReference(typeof(DateTime)).Resolve()))
                             .Select(_Type => _Type.IsArray ? _Type.GetElementType() : _Type).Distinct();
 
-                        definitionList.AddRange(resparameters.ToList());
+                        foreach (var res in resparameters)
+                            if (!definitionList.Contains(res)) definitionList.Add(res);
+
                         int beforeCnt = definitionList.Count;
                         for (int i = 0; i < beforeCnt; i++)
                         {
@@ -315,9 +318,9 @@ namespace Swagger4WCF
                     }
                     else
                     {
-                        if (type.Resolve()?.GetCustomAttribute<DataContractAttribute>() == null)
+                        if (type.Resolve()?.GetCustomAttribute<DataContractAttribute>() != null)
                         {
-                            definitionList.Add(type);
+                            if (!definitionList.Contains(type)) definitionList.Add(type);
                             this.Add("$ref: \"#/definitions/", type.Name, "\"");
                         }
                         else
