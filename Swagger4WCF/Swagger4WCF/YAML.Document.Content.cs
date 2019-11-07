@@ -44,7 +44,7 @@ namespace Swagger4WCF
                     using (new Block(this))
                     {
                         this.Add("title: ", type.Name);
-                        if (documentation[type] != null) { this.Add("description: ", documentation[type]); }
+                        if (documentation[type] != null) { this.Add("description: ", $"\"{documentation[type]}\""); }
                         var _customAttribute = type.Module.Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
                         var _argument = _customAttribute?.Argument<string>(0);
                         if (_argument != null)
@@ -148,7 +148,7 @@ namespace Swagger4WCF
                         {
 
                             this.Add("summary: ", method.Name);
-                            if (documentation != null && documentation[method].Summary != null) { this.Add("description: ", documentation[method].Summary); }
+                            if (documentation != null && documentation[method].Summary != null) { this.Add("description: ", $"\"{documentation[method].Summary}\""); }
                             this.Add("consumes:");
                             using (new Block(this))
                             {
@@ -185,7 +185,7 @@ namespace Swagger4WCF
                                 {
                                     if (documentation != null && documentation[method].Response != null)
                                     {
-                                        this.Add("description: ", documentation[method].Response);
+                                        this.Add("description: ", $"\"{documentation[method].Response}\"");
                                     }
                                     else
                                     {
@@ -225,7 +225,7 @@ namespace Swagger4WCF
                             || _type.IsArray)
                         {
                             this.Add("in: query");
-                            if (documentation != null && documentation[method, parameter] != null) { this.Add("description: ", documentation[method, parameter]); }
+                            if (documentation != null && documentation[method, parameter] != null) { this.Add("description: ", $"\"{documentation[method, parameter]}\""); }
                             this.Add("required: ", parameter.ParameterType.IsValueType.ToString().ToLower());
                             this.Add(parameter.ParameterType, documentation);
                         }
@@ -234,7 +234,7 @@ namespace Swagger4WCF
                             this.Add("in: body");
                             if (documentation != null && documentation[method, parameter] != null)
                             {
-                                this.Add("description: ", documentation[method, parameter]);
+                                this.Add("description: ", $"\"{documentation[method, parameter]}\"");
                             }
                             this.Add("required: ", parameter.ParameterType.IsValueType.ToString().ToLower());
                             this.Add("schema:");
@@ -252,7 +252,7 @@ namespace Swagger4WCF
                     using (new Block(this))
                     {
                         this.Add(property.PropertyType, documentation);
-                        if (documentation != null && documentation[property] != null) { this.Add("description: ", documentation[property]); }
+                        if (documentation != null && documentation[property] != null) { this.Add("description: ", $"\"{documentation[property]}\""); }
                     }
                 }
 
@@ -345,7 +345,7 @@ namespace Swagger4WCF
                         this.Add("type: object");
                         if (documentation != null && !String.IsNullOrEmpty(documentation[referenceType.Resolve()]))
                         {
-                            this.Add(string.Concat("description: ", documentation[referenceType.Resolve()]));
+                            this.Add(string.Concat("description: ", $"\"{documentation[referenceType.Resolve()]}\""));
                         }
 
                         if (referenceType.Resolve().Properties.Count > 0)
